@@ -1,0 +1,2 @@
+scpclient==0.7
+paramiko==2.6.0 
