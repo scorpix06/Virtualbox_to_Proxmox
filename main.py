@@ -42,10 +42,11 @@ class vboxToProxmox():
         
     def unzipOva(self):
         print("[*] Unzipping the ova")
-        command = "tar -xvf {}".format(self.ovaName)
+        command = "mkdir ovascript && mv {} ./ovascript && cd ovascript && tar -xvf {}".format(self.ovaName)
         stdin, stdout, stderr = self.ssh.exec_command(command)
         print("[*] OVA Unzipped")
         print(stderr)
+
 
 
 if __name__ == "__main__":        
