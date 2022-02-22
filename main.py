@@ -66,13 +66,17 @@ class vboxToProxmox():
         for line in iter(stdout.readline, ""):
             print(line, end="")
 
-if __name__ == "__main__":        
+if __name__ == "__main__":
+
+
+    ovaPath = settings.ovaPath,
+    proxmoxIp = settings.ipProxmox,
+    sshPort =    settings.sshPort,
+    username = settings.loginProxmox,
+    password = int(input('Password for {} user :'.format(username)))
+    vmID = settings.vmID,
+    storageDisk = settings.storage,      
+    
     vboxToProxmox(
-        settings.ovaPath,
-        settings.ipProxmox,
-        settings.sshPort,
-        settings.loginProxmox,
-        settings.passProxmox,
-        settings.vmID,
-        settings.storage,
+
         )
