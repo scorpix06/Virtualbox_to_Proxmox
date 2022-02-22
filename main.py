@@ -7,6 +7,7 @@ import settings
 import sys
 import os
 import time
+import getpass
 
 class vboxToProxmox():
 
@@ -74,7 +75,7 @@ if __name__ == "__main__":
     proxmoxIp = settings.ipProxmox
     sshPort = settings.sshPort
     username = settings.loginProxmox
-    password = str(input('Password for {} user :'.format(username)))
+    password = getpass.getpass(prompt='Password of {} user : '.format(username))
     vmId = int(input("Choose a VM id : "))
     storageDisk = settings.diskStorage      
     
