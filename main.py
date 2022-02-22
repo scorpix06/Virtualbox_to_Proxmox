@@ -70,13 +70,13 @@ class vboxToProxmox():
 if __name__ == "__main__":
 
 
-    ovaPath = settings.ovaPath,
-    proxmoxIp = settings.ipProxmox,
-    sshPort = settings.sshPort,
-    username = settings.loginProxmox,
-    password = int(input('Password for {} user :'.format(username)))
+    ovaPath = settings.ovaPath
+    proxmoxIp = settings.ipProxmox
+    sshPort = settings.sshPort
+    username = settings.loginProxmox
+    password = str(input('Password for {} user :'.format(username)))
     vmId = int(input("Choose a VM id : "))
-    storageDisk = settings.storage,      
+    storageDisk = settings.diskStorage      
     
     vboxToProxmox(
         ovaPath,
