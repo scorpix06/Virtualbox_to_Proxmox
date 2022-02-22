@@ -1,4 +1,5 @@
 
+from re import S
 from paramiko import SSHClient
 from scp import SCPClient
 from pathlib import Path
@@ -23,8 +24,8 @@ class vboxToProxmox():
 
     def run(self):
         self.connection()
-        #self.sendOva()
-        #self.unzipOva()
+        self.sendOva()
+        self.unzipOva()
         self.createVM()
 
     def connection(self):
@@ -71,12 +72,18 @@ if __name__ == "__main__":
 
     ovaPath = settings.ovaPath,
     proxmoxIp = settings.ipProxmox,
-    sshPort =    settings.sshPort,
+    sshPort = settings.sshPort,
     username = settings.loginProxmox,
     password = int(input('Password for {} user :'.format(username)))
-    vmID = settings.vmID,
+    vmId = int(input("Choose a VM id : "))
     storageDisk = settings.storage,      
     
     vboxToProxmox(
-
+        ovaPath,
+        proxmoxIp,
+        sshPort,
+        username,
+        password,
+        vmId,
+        storageDisk,
         )
