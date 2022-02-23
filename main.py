@@ -28,6 +28,7 @@ class vboxToProxmox():
         self.sendOva()
         self.unzipOva()
         self.createVM()
+        self.deleteFiles()
 
     def connection(self):
         print("[$] Connecting to host")
@@ -65,8 +66,13 @@ class vboxToProxmox():
         print("[$] Importing VM disk")
         stdin, stdout, stderr = self.ssh.exec_command(importDiskCommand, get_pty=True)
 
+        # For stream of the ssh output
         for line in iter(stdout.readline, ""):
             print(line, end="")
+
+    def deleteFiles(self):
+        command = "rm -R ~/ovafile"
+        stdin, stdout, stderr = self.ssh.exec_command(command, get_pty=True)
 
 if __name__ == "__main__":
 
