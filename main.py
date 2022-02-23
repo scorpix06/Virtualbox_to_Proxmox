@@ -18,7 +18,7 @@ class vboxToProxmox():
         self.pveIp = pveIP
         self.pveLogin = pveLogin
         self.pvePass = pvePass
-        self.vmId = vmId
+        self.vmId = int(vmId)
         self.storageDisk = storage
 
         self.run()
@@ -26,10 +26,10 @@ class vboxToProxmox():
     def run(self):
         self.connection()
         self.checkVmId()
-        self.sendOva()
-        self.unzipOva()
-        self.createVM()
-        self.deleteFiles()
+        #self.sendOva()
+        #self.unzipOva()
+        #self.createVM()
+        #self.deleteFiles()
 
     def connection(self):
         print("[$] Connecting to the Proxmox Hypervisor")
@@ -87,7 +87,6 @@ class vboxToProxmox():
         """ Check if VM id given by user is available and if user do not give vm id find availaible Vm id """
 
         vmList = []
-
         command = "cat /etc/pve/.vmlist"
         stdin, stdout, stderr = self.ssh.exec_command(command)
         out = stdout.readlines()
@@ -104,7 +103,10 @@ class vboxToProxmox():
         
         if self.vmId == 0:
             self.vmId = max(vmList) + 1
-        elif self.vmId in vmList:
+        elif isinstance(self.vmId, int) == False:
+            print("[$] The VM ID you choose is not a number, the VM id will be choose automaticly")
+            self.vmId = max(vmList) + 1
+        elif int(self.vmId) in vmList:
             while self.vmId in vmList:
                 newId = input("The VM ID you choose is already taken, please enter an available ID :")
                 if newId not in vmList:
@@ -114,7 +116,6 @@ class vboxToProxmox():
                         print("Please enter a valid VM ID")
                 elif newId == "":
                     self.vmId = max(vmList) + 1
-                    
 
 if __name__ == "__main__":
 
@@ -124,7 +125,9 @@ if __name__ == "__main__":
     sshPort = settings.sshPort
     username = settings.loginProxmox
     password = getpass.getpass(prompt='Password of {} user : '.format(username))
-    vmId = int(input("Choose a VM id : "))
+    vmId = input("Choose a VM id : ")
+    if vmId == "":
+        vmId = 0
     storageDisk = settings.diskStorage      
     
     vboxToProxmox(
@@ -134,4 +137,5 @@ if __name__ == "__main__":
         username,
         password,
         storageDisk,
+        vmId=vmId,
         )
