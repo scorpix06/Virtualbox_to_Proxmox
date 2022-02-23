@@ -26,10 +26,10 @@ class vboxToProxmox():
     def run(self):
         self.connection()
         self.checkVmId()
-        #self.sendOva()
-        #self.unzipOva()
-        #self.createVM()
-        #self.deleteFiles()
+        self.sendOva()
+        self.unzipOva()
+        self.createVM()
+        self.deleteFiles()
 
     def connection(self):
         print("[$] Connecting to the Proxmox Hypervisor")
@@ -86,10 +86,35 @@ class vboxToProxmox():
     def checkVmId(self):
         """ Check if VM id given by user is available and if user do not give vm id find availaible Vm id """
 
+        vmList = []
+
         command = "cat /etc/pve/.vmlist"
         stdin, stdout, stderr = self.ssh.exec_command(command)
-        out = stdout.readlines()[3:]
-        print(out)
+        out = stdout.readlines()
+
+        for vm in out:
+            begin = vm.find('"')
+            end = vm.find('"', 2)
+            vmId = vm[begin + 1:end]
+            try: 
+                vmId = int(vmId)
+                vmList.append(int(vmId))
+            except:
+                pass
+        
+        if self.vmId == 0:
+            self.vmId = max(vmList) + 1
+        elif self.vmId in vmList:
+            while self.vmId in vmList:
+                newId = input("The VM ID you choose is already taken, please enter an available ID :")
+                if newId not in vmList:
+                    try:
+                        self.vmId = int(newId)
+                    except:
+                        print("Please enter a valid VM ID")
+                elif newId == "":
+                    self.vmId = max(vmList) + 1
+                    
 
 if __name__ == "__main__":
 
