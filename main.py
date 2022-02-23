@@ -11,7 +11,7 @@ import getpass
 
 class vboxToProxmox():
 
-    def __init__(self, ovaPath, pveIP, pvePort, pveLogin, pvePass, vmId, storage):
+    def __init__(self, ovaPath, pveIP, pvePort, pveLogin, pvePass, storage, vmId=0):
         #self.vboxPath = "C:\\Program Files\\Oracle\VirtualBox"
         self.ovaPath = Path(ovaPath)
         self.ovaName = os.path.basename(self.ovaPath)
@@ -25,10 +25,11 @@ class vboxToProxmox():
 
     def run(self):
         self.connection()
-        self.sendOva()
-        self.unzipOva()
-        self.createVM()
-        self.deleteFiles()
+        self.checkVmId()
+        #self.sendOva()
+        #self.unzipOva()
+        #self.createVM()
+        #self.deleteFiles()
 
     def connection(self):
         print("[$] Connecting to host")
@@ -74,6 +75,14 @@ class vboxToProxmox():
         command = "rm -R ~/ovafile"
         stdin, stdout, stderr = self.ssh.exec_command(command, get_pty=True)
 
+    def checkVmId(self):
+        """ Check if VM id given by user is available and if user do not give vm id find availaible Vm id """
+
+        command = "cat /etc/pve/.vmlist"
+        stdin, stdout, stderr = self.ssh.exec_command(command)
+        out = stdout.readlines()[3:]
+        print(out)
+
 if __name__ == "__main__":
 
 
@@ -91,6 +100,5 @@ if __name__ == "__main__":
         sshPort,
         username,
         password,
-        vmId,
         storageDisk,
         )
