@@ -23,12 +23,14 @@ To deploy this project run
 
 ## Installation on Windows
 
-To deploy this project make sure python and  pip is installed on your computer then download the source code here :
+To deploy this project make sure python 3 and  pip is installed on your computer then download the source code here :
 https://github.com/scorpix06/Virtualbox_to_Proxmox/archive/refs/heads/main.zip
+open the projet in cmd an run
 
-## Documentation
+```bash
+  py -m pip install -r requirements.txt
 
-[Documentation](https://linktodocumentation)
+```
 
 
 ## How to use
