@@ -1,6 +1,6 @@
 
 from re import S
-from paramiko import SSHClient
+from paramiko import SSHClient, ssh_exception 
 from scp import SCPClient
 from pathlib import Path
 import settings
@@ -32,10 +32,18 @@ class vboxToProxmox():
         #self.deleteFiles()
 
     def connection(self):
-        print("[$] Connecting to host")
-        self.ssh = SSHClient()
-        self.ssh.load_system_host_keys()
-        self.ssh.connect(self.pveIp, 22, self.pveLogin, self.pvePass, timeout=20)
+        print("[$] Connecting to the Proxmox Hypervisor")
+
+        try:
+            self.ssh = SSHClient()
+            self.ssh.load_system_host_keys()
+            self.ssh.connect(self.pveIp, 22, self.pveLogin, self.pvePass, timeout=10)
+
+        except ssh_exception.AuthenticationException:
+            print("Authentification error, make sur your username and password is right and allowed to connect in SSH")
+
+        except Exception:
+            print("Impossible to connect to the Proxmox hypervisor, make sur the SSH port and IP is right")
 
     def sendOva(self):
 
