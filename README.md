@@ -47,6 +47,6 @@ The informations needed by the script is
 
 ## Roadmap 
 
-- Automatic VM id detection
+- Handle multiple disk's VM
 - windows executable version
 - Automatic storage detection
