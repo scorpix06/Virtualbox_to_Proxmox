@@ -13,7 +13,7 @@ A simple python script that migrate your VirtualBox VM to your Proxmox hyperviso
 
 ## Installation on Linux
 
-To deploy this project run
+To deploy this project run this :
 
 ```bash
   git clone https://github.com/scorpix06/Virtualbox_to_Proxmox.git
