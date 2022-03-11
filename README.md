@@ -1,7 +1,9 @@
 
 # VirtualBox to Proxmox  
 
-A simple python script that migrate your VirtualBox VM to your Proxmox hypervisor
+A simple python script that migrate your VirtualBox VM to your Proxmox hypervisor.
+
+Working with Proxmox VE 7.1
 
 
 
@@ -47,6 +49,6 @@ The informations needed by the script is
 
 ## Roadmap 
 
-- Automatic VM id detection
+- Handle multiple disk's VM
 - windows executable version
 - Automatic storage detection
