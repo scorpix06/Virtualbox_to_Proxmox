@@ -26,10 +26,10 @@ class vboxToProxmox():
     def run(self):
         self.connection()
         self.checkVmId()
-        #self.sendOva()
-        #self.unzipOva()
-        #self.createVM()
-        #self.deleteFiles()
+        self.sendOva()
+        self.unzipOva()
+        self.createVM()
+        self.deleteFiles()
 
     def connection(self):
         print("[$] Connecting to the Proxmox Hypervisor")
